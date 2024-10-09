@@ -98,7 +98,16 @@ def get_middle_east_cities(country_code):
 
     cities = []
     for element in data["elements"]:
-        name = element["tags"].get("name:en", element["tags"].get("name", "Unknown"))
+        name = {
+            "default": element["tags"].get("name", "Unknown"),
+            "en": element["tags"].get(
+                "name:en", element["tags"].get("name", "Unknown")
+            ),
+            "ar": element["tags"].get(
+                "name:ar", element["tags"].get("name", "Unknown")
+            ),
+        }
+
         population_str = element["tags"].get("population", "0")
         population = parse_population(population_str)
 
